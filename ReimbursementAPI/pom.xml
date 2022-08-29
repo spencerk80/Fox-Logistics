@@ -12,7 +12,7 @@
 	<artifactId>ReimbursementAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ReimbursementAPI</name>
-	<description>RESTfull API for employee reimbursments</description>
+	<description>RESTfull API for employee reimbursements</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -39,6 +39,29 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-suite-engine</artifactId>
+			<version>1.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<version>1.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-engine</artifactId>
+			<version>1.9.0</version>
 		</dependency>
 	</dependencies>
 

@@ -47,10 +47,10 @@ public class ReimbursementTicketService {
     private Map<String, Object> mkPageContents(Page<ReimbursementTicket> results) {
         Map<String, Object> pageContents = new HashMap<>();
 
-        pageContents.put("tickets", results.getContent());
-        pageContents.put("currentPage", results.getNumber());
-        pageContents.put("totalItems", results.getTotalElements());
-        pageContents.put("totalPages", results.getTotalPages());
+        pageContents.put("tickets", results == null ? null : results.getContent());
+        pageContents.put("currentPage", results == null ? 0 : results.getNumber());
+        pageContents.put("totalItems", results == null ? 0 : results.getTotalElements());
+        pageContents.put("totalPages", results == null ? 0 : results.getTotalPages());
 
         return pageContents;
     }
