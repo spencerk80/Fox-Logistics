@@ -1,4 +1,4 @@
-package com.github.spencerk.ReimbursementAPI.Entity;
+package com.github.spencerk.ReimbursementAPI.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

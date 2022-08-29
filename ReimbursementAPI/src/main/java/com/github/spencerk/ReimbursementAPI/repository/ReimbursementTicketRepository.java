@@ -1,6 +1,6 @@
 package com.github.spencerk.ReimbursementAPI.repository;
 
-import com.github.spencerk.ReimbursementAPI.Entity.ReimbursementTicket;
+import com.github.spencerk.ReimbursementAPI.entity.ReimbursementTicket;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
