@@ -40,6 +40,6 @@ public class EmployeeServiceTest {
     public void getEmployeeByID() {
         when(repo.findById(UUID.fromString(testID))).thenReturn(Optional.of(testEmployee));
 
-        assertEquals(testEmployee, service.getEmployee(testID));
+        assertEquals(testEmployee, service.getEmployee(UUID.fromString(testID)));
     }
 }

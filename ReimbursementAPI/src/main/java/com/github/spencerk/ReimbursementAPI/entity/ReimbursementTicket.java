@@ -3,6 +3,7 @@ package com.github.spencerk.ReimbursementAPI.entity;
 import com.github.spencerk.ReimbursementAPI.enums.ReimbursementCategory;
 import com.github.spencerk.ReimbursementAPI.enums.ReimbursementStatus;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -13,9 +14,11 @@ public class ReimbursementTicket {
     private ReimbursementCategory   category;
     private String                  userComment;
     private ReimbursementStatus     status;
+    private LocalDateTime           timeStamp;
 
     public ReimbursementTicket() {
         this.id = UUID.randomUUID();
+        this.timeStamp = LocalDateTime.now();
     }
 
     public ReimbursementTicket(
@@ -27,6 +30,7 @@ public class ReimbursementTicket {
         this.category = category;
         this.userComment = userComment;
         this.status = status;
+        this.timeStamp = LocalDateTime.now();
     }
 
     public ReimbursementTicket(
@@ -39,6 +43,7 @@ public class ReimbursementTicket {
         this.category = category;
         this.userComment = userComment;
         this.status = status;
+        this.timeStamp = LocalDateTime.now();
     }
 
     public UUID getId() {
@@ -85,6 +90,10 @@ public class ReimbursementTicket {
         this.status = status;
     }
 
+    public void setTimeStamp(LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
     @Override
     public boolean equals(Object o) {
         ReimbursementTicket that;
@@ -104,13 +113,15 @@ public class ReimbursementTicket {
     @Override
     public String toString() {
         return String.format(
-                "{\n\tid: %s,\n\temployeeID: %s,\n\tamount: $%,.2f\n\tstatus: %s\n\tcategory: %s\n\t,userComment: %s\n}",
+                "{\n\tid: %s,\n\temployeeID: %s,\n\tamount: $%,.2f,\n\tstatus: %s,\n\tcategory: %s,\n\t" +
+                        "userComment: %s,\n\ttimeStamp: %s\n}",
                 this.id,
                 this.employeeID,
                 this.amount,
                 this.status,
                 this.category,
-                this.userComment
+                this.userComment,
+                this.timeStamp
         );
     }
 }
