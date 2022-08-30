@@ -25,7 +25,7 @@ public class EmployeeServiceTest {
 
     private final String        testID = "6143b03e-ddf1-48d8-9768-e0b270f89bc3";
     private Employee testEmployee = new Employee(
-            UUID.fromString(testID), "b.smith", "Bob", "Smith", "b.smith@email.com",
+            testID, "b.smith", "Bob", "Smith", "b.smith@email.com",
             "555-555-5555", "AB38E0C7D"
     );
 
@@ -33,13 +33,13 @@ public class EmployeeServiceTest {
     public void getEmployeeByUsername() {
         when(repo.findByUsername(testEmployee.getUsername())).thenReturn(Optional.of(testEmployee));
 
-        assertEquals(testEmployee, service.getEmployee(testEmployee.getUsername()));
+        assertEquals(testEmployee, service.getEmployeeByUsername(testEmployee.getUsername()));
     }
 
     @Test
     public void getEmployeeByID() {
-        when(repo.findById(UUID.fromString(testID))).thenReturn(Optional.of(testEmployee));
+        when(repo.findById(testID)).thenReturn(Optional.of(testEmployee));
 
-        assertEquals(testEmployee, service.getEmployee(UUID.fromString(testID)));
+        assertEquals(testEmployee, service.getEmployeeByID(testID));
     }
 }
