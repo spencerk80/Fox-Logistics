@@ -31,17 +31,17 @@ public class ReimbursementTicketService {
     }
 
     public Map<String, Object> getAllByStatus(ReimbursementStatus status, Pageable page) {
-        return mkPageContents(repo.findAllByStatus(status, page));
+        return mkPageContents(repo.findByStatus(status, page));
     }
 
-    public Map<String, Object> getAllByEmployeeID(UUID employeeID, Pageable page) {
-        return mkPageContents(repo.findAllByEmployeeID(employeeID, page));
+    public Map<String, Object> getAllByEmployeeId(String employeeID, Pageable page) {
+        return mkPageContents(repo.findByEmployeeId(employeeID, page));
     }
 
-    public Map<String, Object> getAllByEmployeeIDAndStatus(
-            UUID id, ReimbursementStatus status, Pageable page
+    public Map<String, Object> getAllByEmployeeIdAndStatus(
+            String id, ReimbursementStatus status, Pageable page
     ) {
-        return mkPageContents(repo.findByAllByEmployeeIDAndStatus(id, status, page));
+        return mkPageContents(repo.findByEmployeeIdAndStatus(id, status, page));
     }
 
     private Map<String, Object> mkPageContents(Page<ReimbursementTicket> results) {

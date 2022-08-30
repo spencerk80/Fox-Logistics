@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ReimbursementTicketRepository extends MongoRepository<ReimbursementTicket, UUID> {
-    Page<ReimbursementTicket> findAllByStatus(ReimbursementStatus status, Pageable pageable);
-    Page<ReimbursementTicket> findAllByEmployeeID(UUID employeeID, Pageable pageable);
-    Page<ReimbursementTicket> findByAllByEmployeeIDAndStatus(UUID employeeID, ReimbursementStatus status, Pageable page);
+public interface ReimbursementTicketRepository extends MongoRepository<ReimbursementTicket, String> {
+    Page<ReimbursementTicket> findByStatus(ReimbursementStatus status, Pageable pageable);
+    Page<ReimbursementTicket> findByEmployeeId(String employeeID, Pageable pageable);
+    Page<ReimbursementTicket> findByEmployeeIdAndStatus(String employeeID, ReimbursementStatus status, Pageable page);
 }
+

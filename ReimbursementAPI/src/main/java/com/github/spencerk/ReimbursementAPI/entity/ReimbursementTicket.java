@@ -8,8 +8,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ReimbursementTicket {
-    private UUID                    id,
-                                    employeeID;
+    private String                    id,
+                                    employeeId;
     private float                   amount;
     private ReimbursementCategory   category;
     private String                  userComment;
@@ -17,15 +17,15 @@ public class ReimbursementTicket {
     private LocalDateTime           timeStamp;
 
     public ReimbursementTicket() {
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
         this.timeStamp = LocalDateTime.now();
     }
 
     public ReimbursementTicket(
-            UUID employeeID, float amount, ReimbursementCategory category, String userComment, ReimbursementStatus status
+            String employeeID, float amount, ReimbursementCategory category, String userComment, ReimbursementStatus status
     ) {
-        this.id = UUID.randomUUID();
-        this.employeeID = employeeID;
+        this.id = UUID.randomUUID().toString();
+        this.employeeId = employeeID;
         this.amount = amount;
         this.category = category;
         this.userComment = userComment;
@@ -34,11 +34,11 @@ public class ReimbursementTicket {
     }
 
     public ReimbursementTicket(
-            UUID id, UUID employeeID, float amount, ReimbursementCategory category, String userComment,
+            String id, String employeeID, float amount, ReimbursementCategory category, String userComment,
             ReimbursementStatus status
     ) {
         this.id = id;
-        this.employeeID = employeeID;
+        this.employeeId = employeeID;
         this.amount = amount;
         this.category = category;
         this.userComment = userComment;
@@ -46,16 +46,16 @@ public class ReimbursementTicket {
         this.timeStamp = LocalDateTime.now();
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public UUID getEmployeeID() {
-        return employeeID;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployeeID(UUID employeeID) {
-        this.employeeID = employeeID;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     public float getAmount() {
@@ -116,7 +116,7 @@ public class ReimbursementTicket {
                 "{\n\tid: %s,\n\temployeeID: %s,\n\tamount: $%,.2f,\n\tstatus: %s,\n\tcategory: %s,\n\t" +
                         "userComment: %s,\n\ttimeStamp: %s\n}",
                 this.id,
-                this.employeeID,
+                this.employeeId,
                 this.amount,
                 this.status,
                 this.category,

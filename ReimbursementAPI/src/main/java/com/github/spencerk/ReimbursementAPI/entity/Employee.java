@@ -1,12 +1,14 @@
 package com.github.spencerk.ReimbursementAPI.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 import java.util.UUID;
 
 public class Employee {
-    private UUID    id;
+    @Id
+    private String    id;
     private String  username,
                     fname,
                     lname,
@@ -17,11 +19,11 @@ public class Employee {
     private String  password;
 
     public Employee() {
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
 
     public Employee(String username, String fname, String lname, String email, String phone, String password) {
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
         this.username = username;
         this.fname = fname;
         this.lname = lname;
@@ -30,7 +32,7 @@ public class Employee {
         this.password = password;
     }
 
-    public Employee(UUID id, String username, String fname, String lname, String email, String phone, String password) {
+    public Employee(String id, String username, String fname, String lname, String email, String phone, String password) {
         this.id = id;
         this.username = username;
         this.fname = fname;
@@ -40,9 +42,11 @@ public class Employee {
         this.password = password;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
+
+    public void setId(String id) { this.id = id; }
 
     public String getUsername() {
         return username;
@@ -90,6 +94,16 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean validate() {
+        return  ! "".equals(this.id) &&
+                ! "".equals(this.lname) &&
+                ! "".equals(this.fname) &&
+                ! "".equals(this.email) &&
+                this.email.matches("[a-zA-Z\\d._-]+@.+\\..+") &&
+                ! "".equals(this.phone) &&
+                ! "".equals(this.password);
     }
 
     @Override
