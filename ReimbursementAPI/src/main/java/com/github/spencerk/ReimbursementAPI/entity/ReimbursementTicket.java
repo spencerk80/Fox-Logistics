@@ -94,6 +94,14 @@ public class ReimbursementTicket {
         this.timeStamp = timeStamp;
     }
 
+    public boolean validate() {
+        return  ! "".equals(this.id) &&
+                ! "".equals(this.employeeId) &&
+                this.amount != 0 &&
+                ! "".equals(this.status) &&
+                ! "".equals(this.category);
+    }
+
     @Override
     public boolean equals(Object o) {
         ReimbursementTicket that;

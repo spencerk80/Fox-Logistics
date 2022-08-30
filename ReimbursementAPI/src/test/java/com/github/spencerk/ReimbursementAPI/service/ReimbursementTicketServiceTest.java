@@ -29,75 +29,75 @@ public class ReimbursementTicketServiceTest {
 
     private List<ReimbursementTicket> allTickets = Stream.of(
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 85.35f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 85.35f,
                     ReimbursementCategory.GAS, "", ReimbursementStatus.PENDING
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 1060f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 1060f,
                     ReimbursementCategory.LODGING, "", ReimbursementStatus.ACCEPTED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 23.48f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 23.48f,
                     ReimbursementCategory.MEAL, "", ReimbursementStatus.DENIED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 85.35f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 85.35f,
                     ReimbursementCategory.GAS, "", ReimbursementStatus.PENDING
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 560f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 560f,
                     ReimbursementCategory.LODGING, "", ReimbursementStatus.ACCEPTED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 23.48f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 23.48f,
                     ReimbursementCategory.MEAL, "", ReimbursementStatus.DENIED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 85.35f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 85.35f,
                     ReimbursementCategory.GAS, "", ReimbursementStatus.PENDING
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 560f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 560f,
                     ReimbursementCategory.LODGING, "", ReimbursementStatus.ACCEPTED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 23.48f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 23.48f,
                     ReimbursementCategory.MEAL, "", ReimbursementStatus.DENIED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 85.35f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 85.35f,
                     ReimbursementCategory.GAS, "", ReimbursementStatus.PENDING
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 560f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 560f,
                     ReimbursementCategory.LODGING, "", ReimbursementStatus.ACCEPTED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 23.48f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 23.48f,
                     ReimbursementCategory.MEAL, "", ReimbursementStatus.DENIED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 85.35f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 85.35f,
                     ReimbursementCategory.GAS, "", ReimbursementStatus.PENDING
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 560f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 560f,
                     ReimbursementCategory.LODGING, "", ReimbursementStatus.ACCEPTED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 23.48f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 23.48f,
                     ReimbursementCategory.MEAL, "", ReimbursementStatus.DENIED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 85.35f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 85.35f,
                     ReimbursementCategory.GAS, "", ReimbursementStatus.PENDING
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 560f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 560f,
                     ReimbursementCategory.LODGING, "", ReimbursementStatus.ACCEPTED
             ),
             new ReimbursementTicket(
-                    UUID.fromString("6143b03e-ddf1-48d8-9768-e0b270f89bc3"), 23.48f,
+                    "6143b03e-ddf1-48d8-9768-e0b270f89bc3", 23.48f,
                     ReimbursementCategory.MEAL, "", ReimbursementStatus.DENIED
             )
     ).collect(Collectors.toList());
