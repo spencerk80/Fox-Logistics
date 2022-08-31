@@ -2,6 +2,8 @@ package com.github.spencerk.ReimbursementAPI.security;
 
 import com.github.spencerk.ReimbursementAPI.entity.Employee;
 import com.github.spencerk.ReimbursementAPI.repository.EmployeeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,12 +21,13 @@ import java.util.List;
 
 @EnableWebSecurity
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
-
-    private final EmployeeRepository employeeRepo;
+    private final Logger                logger;
+    private final EmployeeRepository    employeeRepo;
 
     @Autowired
-    public UserDetailsService(EmployeeRepository dao) {
-        employeeRepo = dao;
+    public UserDetailsService(EmployeeRepository repo) {
+        employeeRepo = repo;
+        logger = LoggerFactory.getLogger(UserDetailsService.class);
     }
 
     @Override
@@ -33,7 +36,13 @@ public class UserDetailsService implements org.springframework.security.core.use
         Employee employee;
         List<GrantedAuthority> roles = new ArrayList<>();
 
-        if(employeeRepo.findByUsername(username).isEmpty()) throw new UsernameNotFoundException("User not found");
+        logger.trace("UserDetailsService.loadUserByUsername(username)");
+
+        if(employeeRepo.findByUsername(username).isEmpty()) {
+            logger.error("Unable to find user by username from DB");
+
+            throw new UsernameNotFoundException("User not found");
+        }
 
         employee = employeeRepo.findByUsername(username).get();
         roles.add(new SimpleGrantedAuthority(employee.getRole().toString()));
@@ -41,6 +50,8 @@ public class UserDetailsService implements org.springframework.security.core.use
                 .password(employee.getPassword())
                 .authorities(roles)
                 .build();
+
+        logger.info("Returning UserDetails object");
 
         return user;
     }

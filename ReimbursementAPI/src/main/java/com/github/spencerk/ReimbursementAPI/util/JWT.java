@@ -1,6 +1,8 @@
 package com.github.spencerk.ReimbursementAPI.util;
 
 import io.jsonwebtoken.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,7 @@ import java.util.Date;
 
 @Component
 public class JWT {
-
+    private final Logger logger = LoggerFactory.getLogger(JWT.class);
     private final String secretKey;
 
     public JWT() {
@@ -27,13 +29,15 @@ public class JWT {
         LocalDateTime   exp         = iat.plusDays(1);
         byte[]          keyBytes    = DatatypeConverter.parseBase64Binary(secretKey);
         Key             signingKey  = new SecretKeySpec(keyBytes, SignatureAlgorithm.HS256.getJcaName());
+        JwtBuilder      jwtBuilder  = Jwts.builder()
+                                          .setIssuedAt(Date.from(iat.atZone(ZoneId.systemDefault()).toInstant()))
+                                          .setExpiration(Date.from(exp.atZone(ZoneId.systemDefault()).toInstant()))
+                                          .claim("username", userDetails.getUsername())
+                                          .claim("role", userDetails.getAuthorities().toString())
+                                          .signWith(signingKey);
 
-        JwtBuilder jwtBuilder = Jwts.builder()
-                .setIssuedAt(Date.from(iat.atZone(ZoneId.systemDefault()).toInstant()))
-                .setExpiration(Date.from(exp.atZone(ZoneId.systemDefault()).toInstant()))
-                .claim("username", userDetails.getUsername())
-                .claim("role", userDetails.getAuthorities().toString())
-                .signWith(signingKey);
+        logger.trace("JWT.createJWT(userDetails)");
+        logger.info("JWT created");
 
         return jwtBuilder.compact();
     }
@@ -45,6 +49,9 @@ public class JWT {
                 .parseClaimsJws(jwt)
                 .getBody();
 
+        logger.trace("JWT.getUsername(jwt)");
+        logger.info("Username extracted from JWT");
+
         return (String) claims.get("username");
     }
 
@@ -55,10 +62,16 @@ public class JWT {
                 .parseClaimsJws(jwt)
                 .getBody();
 
+        logger.trace("JWT.getUserRole(jwt)");
+        logger.info("User role extracted from JWT");
+
         return (String) claims.get("role");
     }
 
     public LocalDateTime getJwtExpiration(String jwt) {
+        logger.trace("JWT.getJwtExpiration(jwt)");
+        logger.info("Expiration timestamp extracted from JWT");
+
         return Jwts.parserBuilder()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
                 .build()
@@ -71,17 +84,38 @@ public class JWT {
     public boolean validateJwt(String jwt, UserDetails userDetails) {
         Claims claims;
 
+        logger.trace("JWT.validateJwt(jwt, userDetails)");
+
         try {
             claims = Jwts.parserBuilder()
                     .setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
                     .build()
                     .parseClaimsJws(jwt)
                     .getBody();
-        } catch(Exception e) { return false; }
+        } catch(Exception e) {
+            logger.error(String.format("Could not validate JWT: %s", e.getMessage()));
 
-        if( ! (claims.get("username")).equals(userDetails.getUsername()))              return false;
-        if( ! (claims.get("role")).equals(userDetails.getAuthorities().toString()))    return false;
+            return false;
+        }
 
-        return ! claims.getExpiration().before(new Date());
+        if( ! (claims.get("username")).equals(userDetails.getUsername())) {
+            logger.info("JWT not valid! Username does not match");
+
+            return false;
+        }
+        if( ! (claims.get("role")).equals(userDetails.getAuthorities().toString())) {
+            logger.info("JWT not valid! Role does not match");
+
+            return false;
+        }
+
+        if(claims.getExpiration().before(new Date())) {
+            logger.info("JWT not valid! Token is expired");
+
+            return false;
+        }
+        logger.info("JWT is valid");
+
+        return true;
     }
 }

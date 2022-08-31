@@ -8,8 +8,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ReimbursementTicket {
-    private String                    id,
-                                    employeeId;
+    private final String            id;
+    private String                  employeeId;
     private float                   amount;
     private ReimbursementCategory   category;
     private String                  userComment;
@@ -97,9 +97,7 @@ public class ReimbursementTicket {
     public boolean validate() {
         return  ! "".equals(this.id) &&
                 ! "".equals(this.employeeId) &&
-                this.amount != 0 &&
-                ! "".equals(this.status) &&
-                ! "".equals(this.category);
+                this.amount != 0;
     }
 
     @Override

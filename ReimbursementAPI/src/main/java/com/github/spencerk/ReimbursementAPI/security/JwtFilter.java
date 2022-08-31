@@ -3,6 +3,8 @@ package com.github.spencerk.ReimbursementAPI.security;
 import com.github.spencerk.ReimbursementAPI.service.JwtBlacklistService;
 import com.github.spencerk.ReimbursementAPI.util.JWT;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,15 +21,17 @@ import java.io.IOException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
+    private final Logger                logger;
     private final UserDetailsService    userDetailsService;
     private final JWT                   JWT;
-    private final JwtBlacklistService jwtBlacklistService;
+    private final JwtBlacklistService   jwtBlacklistService;
 
     @Autowired
     public JwtFilter(UserDetailsService userDetailsService, JWT jwt, JwtBlacklistService jwtBlacklistService) {
         this.userDetailsService = userDetailsService;
         this.JWT = jwt;
         this.jwtBlacklistService = jwtBlacklistService;
+        this.logger = LoggerFactory.getLogger(JwtFilter.class);
     }
 
     @Override
@@ -37,11 +41,15 @@ public class JwtFilter extends OncePerRequestFilter {
         String          jwt                     = null,
                         email                   = null;
 
+        logger.trace("JWT request filter checking for JWT and its validity");
+
         //Do NOT try to authenticate these endpoints. Causes 403 if tried
         if(
                 "/api/auth/login".matches(request.getRequestURI())
                 || "/api/employees/register".matches(request.getRequestURI())
         ) {
+            logger.info(String.format("%s is to be ignored. Skip checking for JWT", request.getRequestURI()));
+
             filterChain.doFilter(request, response);
             return;
         }
@@ -49,6 +57,8 @@ public class JwtFilter extends OncePerRequestFilter {
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             email = JWT.getUsername(jwt);
+
+            logger.info("JWT extracted from the headers");
         }
 
         if(email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -56,6 +66,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
             if(JWT.validateJwt(jwt, userDetails) && ! jwtBlacklistService.jwtIsOnBlacklist(jwt)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken;
+
+                logger.info("JWT is valid and not blacklisted");
 
                 usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
@@ -68,6 +80,7 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         }
 
+        logger.info("User is validated and allowed to process their API request");
         filterChain.doFilter(request, response);
     }
 }
