@@ -20,6 +20,7 @@ public class JWT {
     public JWT() {
         this.secretKey = System.getenv("JWT_KEY");
     }
+    public JWT(String testKey) { this.secretKey = testKey; }
 
     public String createJWT(UserDetails userDetails) {
         LocalDateTime   iat         = LocalDateTime.now();
@@ -30,21 +31,21 @@ public class JWT {
         JwtBuilder jwtBuilder = Jwts.builder()
                 .setIssuedAt(Date.from(iat.atZone(ZoneId.systemDefault()).toInstant()))
                 .setExpiration(Date.from(exp.atZone(ZoneId.systemDefault()).toInstant()))
-                .claim("email", userDetails.getUsername())
+                .claim("username", userDetails.getUsername())
                 .claim("role", userDetails.getAuthorities().toString())
                 .signWith(signingKey);
 
         return jwtBuilder.compact();
     }
 
-    public String getUserEmail(String jwt) {
+    public String getUsername(String jwt) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
                 .build()
                 .parseClaimsJws(jwt)
                 .getBody();
 
-        return (String) claims.get("email");
+        return (String) claims.get("username");
     }
 
     public String getUserRole(String jwt) {
@@ -78,7 +79,7 @@ public class JWT {
                     .getBody();
         } catch(Exception e) { return false; }
 
-        if( ! (claims.get("email")).equals(userDetails.getUsername()))                 return false;
+        if( ! (claims.get("username")).equals(userDetails.getUsername()))              return false;
         if( ! (claims.get("role")).equals(userDetails.getAuthorities().toString()))    return false;
 
         return ! claims.getExpiration().before(new Date());
