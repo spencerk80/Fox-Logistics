@@ -1,6 +1,7 @@
 package com.github.spencerk.ReimbursementAPI.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.spencerk.ReimbursementAPI.enums.EmployeeRole;
 import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
@@ -8,12 +9,13 @@ import java.util.UUID;
 
 public class Employee {
     @Id
-    private String    id;
-    private String  username,
-                    fname,
-                    lname,
-                    email,
-                    phone;
+    private String          id;
+    private String          username,
+                            fname,
+                            lname,
+                            email,
+                            phone;
+    private EmployeeRole    role;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String  password;
@@ -22,7 +24,9 @@ public class Employee {
         this.id = UUID.randomUUID().toString();
     }
 
-    public Employee(String username, String fname, String lname, String email, String phone, String password) {
+    public Employee(
+            String username, String fname, String lname, String email, String phone, String password, EmployeeRole role
+    ) {
         this.id = UUID.randomUUID().toString();
         this.username = username;
         this.fname = fname;
@@ -30,9 +34,13 @@ public class Employee {
         this.email = email;
         this.phone = phone;
         this.password = password;
+        this.role = role;
     }
 
-    public Employee(String id, String username, String fname, String lname, String email, String phone, String password) {
+    public Employee(
+            String id, String username, String fname, String lname, String email, String phone, String password,
+            EmployeeRole role
+    ) {
         this.id = id;
         this.username = username;
         this.fname = fname;
@@ -40,6 +48,7 @@ public class Employee {
         this.email = email;
         this.phone = phone;
         this.password = password;
+        this.role = role;
     }
 
     public String getId() {
@@ -96,6 +105,14 @@ public class Employee {
         this.password = password;
     }
 
+    public EmployeeRole getRole() {
+        return role;
+    }
+
+    public void setRole(EmployeeRole role) {
+        this.role = role;
+    }
+
     public boolean validate() {
         return  ! "".equals(this.id) &&
                 ! "".equals(this.lname) &&
@@ -125,13 +142,14 @@ public class Employee {
     @Override
     public String toString() {
         return String.format(
-                "{\n\tid: %s,\n\tusername: %s,\n\tfname: %s,\n\tlname: %s,\n\temail: %s,\n\tphone: %s\n}",
+                "{\n\tid: %s,\n\tusername: %s,\n\tfname: %s,\n\tlname: %s,\n\temail: %s,\n\tphone: %s\n\trole: %s\n}",
                 this.id,
                 this.username,
                 this.fname,
                 this.lname,
                 this.email,
-                this.phone
+                this.phone,
+                this.role
         );
     }
 }

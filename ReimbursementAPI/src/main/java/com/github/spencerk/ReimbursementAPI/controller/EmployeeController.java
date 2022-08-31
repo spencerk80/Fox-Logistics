@@ -23,7 +23,7 @@ public class EmployeeController {
         this.encoder = encoder;
     }
 
-    @PostMapping("employees")
+    @PostMapping("employees/register")
     public ResponseEntity<String> createEmployee(@RequestBody Employee employee) {
         if( ! employee.validate()) return ResponseEntity.badRequest().body("Invalid data sent");
 
