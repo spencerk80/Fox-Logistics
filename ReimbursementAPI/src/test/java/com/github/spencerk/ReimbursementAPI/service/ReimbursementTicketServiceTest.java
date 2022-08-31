@@ -116,6 +116,8 @@ public class ReimbursementTicketServiceTest {
         when(repo.findAll(paging)).thenReturn(pageOfData);
         responseContent = service.getAllTickets(paging);
 
+        //I really can't figure out why it's ignoring the page limit on responseContent's tickets list
+        //In Postman and through the controller, it's working fine...
         assertEquals(pagedList, (List<ReimbursementTicket>) responseContent.get("tickets"));
         assertEquals(0, responseContent.get("currentPage"));
         assertEquals(10l, responseContent.get("totalItems"));
