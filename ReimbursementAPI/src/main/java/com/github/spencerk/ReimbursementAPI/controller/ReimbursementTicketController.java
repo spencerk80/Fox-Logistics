@@ -47,6 +47,9 @@ public class ReimbursementTicketController {
         return ResponseEntity.ok().body(null);
     }
 
+    /******************************************************************************************
+     * Manager level access. Get tickets of all users
+     ******************************************************************************************/
     @GetMapping("tickets/{page}/{limit}")
     public ResponseEntity<Map<String, Object>> getAllTickets(@PathVariable int page, @PathVariable int limit) {
         Pageable paging = PageRequest.of(page, limit, Sort.by(Sort.Order.desc("timeStamp")));
@@ -66,6 +69,10 @@ public class ReimbursementTicketController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
+    /******************************************************************************************
+     * Staff level access. Get tickets for a specific user. (Only their own)
+     ******************************************************************************************/
 
     @GetMapping("tickets/employeeID/{id}/{page}/{limit}")
     public ResponseEntity<Map<String, Object>> getAllTicketsByEmployeeID(

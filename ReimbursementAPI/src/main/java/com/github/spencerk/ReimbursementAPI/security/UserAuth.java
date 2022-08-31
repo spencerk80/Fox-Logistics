@@ -1,5 +1,6 @@
 package com.github.spencerk.ReimbursementAPI.security;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.BeanIds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,9 @@ public class UserAuth extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/api/auth/login").permitAll()
                 .antMatchers("/api/employees/register").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/tickets/**/**").hasAuthority("MANAGER")
+                .antMatchers("tickets/status/**/**/**").hasAuthority("MANAGER")
+                .antMatchers(HttpMethod.PUT, "/api/tickets").hasAuthority("MANAGER")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
