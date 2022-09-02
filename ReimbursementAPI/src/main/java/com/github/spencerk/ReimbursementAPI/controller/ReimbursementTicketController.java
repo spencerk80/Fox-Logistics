@@ -17,10 +17,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 
-import static org.springframework.data.domain.Sort.Order.desc;
-
 @RestController
 @RequestMapping("api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ReimbursementTicketController {
     private final Logger                        logger;
     private final ReimbursementTicketService    service;
