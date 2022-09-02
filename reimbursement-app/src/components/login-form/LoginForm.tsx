@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useContext } from "react"
-import {AuthContext} from "../../context/AuthProvider"
 
+import {AuthContext} from "../../context/AuthProvider"
 import AuthRequest from "../../models/login/AuthRequest"
 import axios from "../../api/axios"
 import './LoginForm.css'
@@ -10,9 +10,9 @@ function LoginForm() {
     const errTxt = "Invalid username/password combo"
     const login_url = '/api/auth/login'
 
-    let {setAuth} = useContext(AuthContext)
-    let [loginCreds, setLoginCreds] = React.useState(new AuthRequest("", ""))
-    let [errMsg, setErrMsg] = React.useState('')
+    const {setAuth} = useContext(AuthContext)
+    const [loginCreds, setLoginCreds] = React.useState(new AuthRequest("", ""))
+    const [errMsg, setErrMsg] = React.useState('')
 
     useEffect(() => {
         setErrMsg('')

@@ -4,6 +4,7 @@ import Home from './components/home/Home'
 import LoginForm from './components/login-form/LoginForm'
 import Unauthorized from './components/unauthorized/Unauthorized'
 import Notfound from './components/not-found/NotFound'
+import ManagerTicketList from './components/manager-ticket-list/ManagerTicketList'
 
 import Layout from "./Layout";
 
@@ -21,6 +22,7 @@ function App() {
         {/*Staff routes*/}
 
         {/*Manager routes*/}
+        <Route path='manage-tickets' element={<ManagerTicketList />} />
       </Route>
     </Routes>
   );

@@ -5,12 +5,12 @@ export interface AuthProviderProps {
 }
 
 export interface AuthProviderContext {
-    auth: {},
-    setAuth: (prevState: {}) => void
+    auth: {jwt:string , employee: object, role:string},
+    setAuth: (prevState: {jwt: string, employee: object, role: string}) => void
 }
 
 const defaultContext: AuthProviderContext = {
-    auth: {},
+    auth: {jwt: '', employee: {}, role: ''},
     setAuth: () => {}
 }
 
@@ -19,7 +19,7 @@ export const AuthContext = createContext<AuthProviderContext>(defaultContext)
 const {Provider} = AuthContext
 
 const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
-    const [auth, setAuth] = useState({})
+    const [auth, setAuth] = useState({jwt: '', employee: {}, role: ''})
 
     return (
         <Provider value={{auth, setAuth}}>
