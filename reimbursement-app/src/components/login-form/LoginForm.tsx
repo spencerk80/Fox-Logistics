@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useContext } from "react"
-import AuthContext from "../../context/AuthProvider"
+import {AuthContext} from "../../context/AuthProvider"
 
 import AuthRequest from "../../models/login/AuthRequest"
 import axios from "../../api/axios"
@@ -10,7 +10,7 @@ function LoginForm() {
     const errTxt = "Invalid username/password combo"
     const login_url = '/api/auth/login'
 
-    // let {setAuth} = useContext(AuthContext)
+    let {auth, setAuth} = useContext(AuthContext)
     let [loginCreds, setLoginCreds] = React.useState(new AuthRequest("", ""))
     let [errMsg, setErrMsg] = React.useState('')
 
@@ -38,6 +38,7 @@ function LoginForm() {
         try {
             let jwt: string
             let employee: object
+
             const res = await axios.post(
                 login_url, 
                 JSON.stringify(loginCreds),
@@ -48,12 +49,12 @@ function LoginForm() {
                 }
             )
 
-            jwt = res.data?.jwt
-            employee = res.data.employee && JSON.parse(res.data.employee)
+            jwt = await res.data?.jwt
+            employee = await res.data?.employee
 
-            console.log(JSON.stringify(res))
+            setAuth({jwt, employee})
 
-            // setAuth({jwt, employee})
+            console.log(auth)
         } catch(err: any) {
             if( ! err?.response) setErrMsg("No server response")
             else if(err.response?.status === 400) setErrMsg('Missing username or password')

@@ -1,20 +1,31 @@
-import React, { ReactElement } from "react"
-import { createContext, useState } from "react"
+import React, { createContext, useState } from "react"
 
-type AuthProviderProps = {
+export interface AuthProviderProps {
     children: React.ReactNode
 }
 
-const AuthContext = createContext({})
+export interface AuthProviderContext {
+    auth: {},
+    setAuth: (prevState: {}) => void
+}
 
-export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({children}) => {
+const defaultContext: AuthProviderContext = {
+    auth: {},
+    setAuth: () => {}
+}
+
+export const AuthContext = createContext<AuthProviderContext>(defaultContext)
+
+const {Provider} = AuthContext
+
+const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const [auth, setAuth] = useState({})
 
     return (
-        <AuthContext.Provider value={{auth, setAuth}}>
+        <Provider value={{auth, setAuth}}>
             {children}
-        </AuthContext.Provider>
+        </Provider>
     )
 }
 
-export default AuthContext
+export default AuthProvider
