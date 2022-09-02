@@ -8,7 +8,7 @@ import fox_icon from '../../img/fox-icon.png'
 function Navbar() {
     return (
         <nav>
-            <img src={fox_icon} alt='company logo' />
+            <Link className='nav-img' to='/'><img src={fox_icon} alt='company logo' /></Link>
             <p>
                 Fox Logistics
             </p>

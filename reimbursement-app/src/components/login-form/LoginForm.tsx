@@ -10,7 +10,7 @@ function LoginForm() {
     const errTxt = "Invalid username/password combo"
     const login_url = '/api/auth/login'
 
-    let {auth, setAuth} = useContext(AuthContext)
+    let {setAuth} = useContext(AuthContext)
     let [loginCreds, setLoginCreds] = React.useState(new AuthRequest("", ""))
     let [errMsg, setErrMsg] = React.useState('')
 
@@ -38,6 +38,7 @@ function LoginForm() {
         try {
             let jwt: string
             let employee: object
+            let role: string
 
             const res = await axios.post(
                 login_url, 
@@ -51,10 +52,9 @@ function LoginForm() {
 
             jwt = await res.data?.jwt
             employee = await res.data?.employee
+            role = await res.data?.employee?.role
 
-            setAuth({jwt, employee})
-
-            console.log(auth)
+            setAuth({jwt, employee, role})
         } catch(err: any) {
             if( ! err?.response) setErrMsg("No server response")
             else if(err.response?.status === 400) setErrMsg('Missing username or password')

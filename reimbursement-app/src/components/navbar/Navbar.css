@@ -18,6 +18,10 @@ img {
     padding: 0 5px;
 }
 
+.nav-img {
+    height: 100%;
+}
+
 p {
     margin-right: auto;
     margin-left: 0.5vw;

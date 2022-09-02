@@ -1,24 +1,28 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import './App.css';
 import Home from './components/home/Home'
 import LoginForm from './components/login-form/LoginForm'
+import Unauthorized from './components/unauthorized/Unauthorized'
+import Notfound from './components/not-found/NotFound'
 
-import Navbar from './components/navbar/Navbar'
+import Layout from "./Layout";
 
 function App() {
 
   return (
-    <div id="app-content">
-      <BrowserRouter>
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginForm />} />
-          </Routes>
-        </main>
-      </BrowserRouter>
-    </div>
+    <Routes >
+      <Route path="/" element={<Layout />}>
+        {/*Public routes*/}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path='/unauthorized' element={<Unauthorized />} />
+        
+        <Route path='*' element={<Notfound />} />
+        {/*Staff routes*/}
+
+        {/*Manager routes*/}
+      </Route>
+    </Routes>
   );
 }
 
