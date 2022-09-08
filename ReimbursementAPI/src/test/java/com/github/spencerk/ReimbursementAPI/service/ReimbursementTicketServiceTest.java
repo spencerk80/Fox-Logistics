@@ -102,6 +102,9 @@ public class ReimbursementTicketServiceTest {
             )
     ).collect(Collectors.toList());
 
+    //Very stuck here. I cannot figure out how to properly mock the page of data so that it matches what's expected.
+    //Might make a JMeter script to test the controller end points and validate returns with assertion statements if
+    //I have time
     @Test
     public void getPageOfAllTickets() {
         final int page = 0, pageSize = 10;

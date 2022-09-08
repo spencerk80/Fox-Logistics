@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ReimbursementTicket {
-    private final String            id;
+    private String                  id;
     private String                  employeeId;
     private float                   amount;
     private ReimbursementCategory   category;
@@ -48,6 +48,10 @@ public class ReimbursementTicket {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmployeeId() {
