@@ -8,7 +8,7 @@ import './LoginForm.css'
 function LoginForm() {
 
     const errTxt = "Invalid username/password combo"
-    const login_url = '/api/auth/login'
+    const login_url = 'auth/login'
 
     const {setAuth} = useContext(AuthContext)
     const [loginCreds, setLoginCreds] = React.useState(new AuthRequest("", ""))

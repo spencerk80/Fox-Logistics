@@ -1,8 +1,17 @@
 import React from "react"
+import Ticket, { TicketProps } from "../ticket/Ticket"
 
-function TicketList() {
+import './TicketList.css'
+
+interface TicketListProps {
+    tickets: Array<TicketProps>
+}
+
+function TicketList(props: TicketListProps) {
     return(
-        <p></p>
+        <article className='ticket-list'>
+            {props.tickets.map(ticket => <Ticket {...ticket}/>)}
+        </article>
     )
 }
 

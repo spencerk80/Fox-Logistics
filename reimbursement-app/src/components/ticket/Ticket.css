@@ -1,0 +1,32 @@
+.ticket {
+    border: solid black 4px;
+    background-color: #ccc;
+    width: 40vw;
+}
+
+td {
+    border: solid black 1px;
+    border-collapse: collapse;
+    
+    width: 50%;
+}
+
+td > button {
+    margin: 0;
+}
+
+#ACCEPTED {
+    background-color: #0c4;
+}
+
+#ACCEPTED:hover {
+    background-color: #0b0;
+}
+
+#DENIED {
+    background-color: #f00;
+}
+
+#DENIED:hover {
+    background-color: #c00;
+}

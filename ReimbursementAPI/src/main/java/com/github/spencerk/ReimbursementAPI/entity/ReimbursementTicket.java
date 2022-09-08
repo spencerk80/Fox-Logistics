@@ -1,5 +1,7 @@
 package com.github.spencerk.ReimbursementAPI.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.github.spencerk.ReimbursementAPI.enums.ReimbursementCategory;
 import com.github.spencerk.ReimbursementAPI.enums.ReimbursementStatus;
 
@@ -14,6 +16,7 @@ public class ReimbursementTicket {
     private ReimbursementCategory   category;
     private String                  userComment;
     private ReimbursementStatus     status;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime           timeStamp;
 
     public ReimbursementTicket() {

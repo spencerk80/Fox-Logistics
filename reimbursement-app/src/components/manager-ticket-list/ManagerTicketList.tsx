@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react"
 
 import './ManagerTicketList.css'
-import axios from '../../api/axios'
+import axios, {TicketDataType} from '../../api/axios'
 import {AuthContext} from '../../context/AuthProvider'
+import TicketList from "../ticket-list/TicketList"
 
 function ManagerTicketList() {
 
     const {auth} = useContext(AuthContext)
-    const [data, setData] = useState({})
+    const [data, setData] = useState<TicketDataType>({tickets: [], totalItems: 0, totalPages: 0, currentPage: 0})
     
     async function getPageOfTickets(page: number) {
         try {
@@ -15,7 +16,7 @@ function ManagerTicketList() {
                 `tickets/${page}/10`,
                 {
                     headers: {
-                        'Authorization': 'Bearer' + auth.jwt
+                        'Authorization': `Bearer ${auth.jwt}`
                     }
                 }
             )
@@ -28,12 +29,14 @@ function ManagerTicketList() {
         }
     }
 
-    useEffect(() => {getPageOfTickets(0)})
+    //I love that the linter says to remove the empty [], but it's VERY much required
+    //eslint-disable-next-line
+    useEffect(() => {getPageOfTickets(0)}, [])
     
     return (
-        <p>
-            {JSON.stringify(data)}
-        </p>
+        <TicketList tickets={data.tickets.map(ticket => {
+            return {...ticket, key: ticket.id}
+        })}/>
     )
 }
 

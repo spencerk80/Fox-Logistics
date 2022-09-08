@@ -14,6 +14,7 @@ function Navbar() {
             </p>
             <div id='nav-button-list'>
                 <Link className="nav-button" to="/login">Login</Link>
+                <Link className="nav-button" to="/manage-tickets">Manage Tickets</Link>
                 {/* <li className='nav-button'>New Ticket</li>
                 <li className='nav-button'>Submitted Tickets</li>
                 <li className='nav-button'>Manage Tickets</li>
