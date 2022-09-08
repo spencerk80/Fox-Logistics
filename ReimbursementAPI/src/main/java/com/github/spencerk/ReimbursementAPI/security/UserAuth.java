@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 public class UserAuth extends WebSecurityConfigurerAdapter {
@@ -30,7 +33,7 @@ public class UserAuth extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().disable().cors().and()
                 .authorizeRequests().antMatchers("/api/auth/login").permitAll()
                 .antMatchers("/api/employees/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/employees/").hasAuthority("MANAGER")
@@ -46,6 +49,13 @@ public class UserAuth extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    protected CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
     }
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
